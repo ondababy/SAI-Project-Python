@@ -7,7 +7,6 @@ import {
     Container, 
     Grid, 
     Paper, 
-    Divider, 
     IconButton, 
     InputAdornment 
 } from "@mui/material";
@@ -18,6 +17,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Note from "../components/Note";
 import api from "../api";
 import "../styles/Home.css";
+import { NoEncryption } from "@mui/icons-material";
 
 const Home = () => {
     const [notes, setNotes] = useState([]);
@@ -172,12 +172,69 @@ const Home = () => {
                                 marginBottom: "1rem",
                                 backgroundColor: "#172a45",
                                 cursor: "pointer",
+                                borderRadius: "8px",
+                                outline: "none",
+                                boxShadow: "0 4px 15px rgba(0, 0, 0, 0.3)",
+                                transition: "transform 0.2s, background-color 0.3s",
                                 "&:hover": {
                                     backgroundColor: "#0e1726",
+                                    transform: "scale(1.02)",
                                 },
                             }}
                         >
-                            <Note note={note} onDelete={deleteNote} />
+                            <Grid container spacing={2} alignItems="center">
+                                <Grid item xs={10}>
+                                    <Typography
+                                        variant="h6"
+                                        sx={{
+                                            color: "#0ea5e9",
+                                            fontWeight: "bold",
+                                            whiteSpace: "nowrap",
+                                            overflow: "hidden",
+                                            textOverflow: "ellipsis",
+                                        }}
+                                    >
+                                        {note.title}
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        sx={{
+                                            color: "#94a3b8",
+                                            whiteSpace: "nowrap",
+                                            overflow: "hidden",
+                                            textOverflow: "ellipsis",
+                                            marginTop: "0.5rem",
+                                        }}
+                                    >
+                                        {note.content}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            justifyContent: "flex-end",
+                                            gap: "0.5rem",
+                                        }}
+                                    >
+                                        <IconButton
+                                            size="small"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                deleteNote(note.id);
+                                            }}
+                                            sx={{
+                                                color: "#f87171",
+                                                "&:hover": {
+                                                    backgroundColor: "rgba(248, 113, 113, 0.1)",
+                                                },
+                                            }}
+                                        >
+                                            <CloseIcon />
+                                        </IconButton>
+                                    </Box>
+                                </Grid>
+                            </Grid>
                         </Paper>
                     ))}
                 </Box>
